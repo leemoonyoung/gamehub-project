@@ -41,6 +41,11 @@ tbody td {
     min-width: 40px;
 }
 
+tbody td .hmsg {
+    font-weight: bold;
+    color: #f00;
+}
+
 </style>
 </head>
 <body>
@@ -103,7 +108,7 @@ tbody td {
           </select>
           <span id="mail_btn"><a onclick="emailChk()">중복확인</a></span>
         </div>
-        
+        <span class="hmsg" id="hmail"></span>
       </td>
     </tr>
     <tr>
@@ -121,6 +126,7 @@ tbody td {
 <div class="btn_box">
   <input id="ins_btn" class="sbtn" type="submit" value="사용자 등록">
 </div>
+
 </form>
 <script type="text/javascript">
 
