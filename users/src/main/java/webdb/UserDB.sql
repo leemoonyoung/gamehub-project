@@ -13,7 +13,7 @@ start with 1
 increment by 1
 nocache
 nocycle;	
-
+123
 select * from Mems;
 drop table Mems;	
 drop sequence Mems_seq;
