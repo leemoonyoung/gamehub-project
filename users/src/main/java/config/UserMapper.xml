@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<!-- 사용자 등록 -->
+	<select id="insUser" parameterType="dto.UserDTO">
+	  insert into Mems(u_id, u_name, u_mail, u_nick, u_day)
+	  values (#{u_id}, #{u_name}, #{u_mail}, #{u_nick}, sysdate)
+	</select>
+
+</mapper>
