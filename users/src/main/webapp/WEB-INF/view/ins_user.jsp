@@ -23,7 +23,7 @@ tbody td {
     color: #999;
 }
 
-}
+
 #mail_btn {
     border: 1px solid #dddddd;
     padding: 10px;
@@ -64,9 +64,10 @@ tbody td .hmsg {
       </td>
       <td>
         <div class="conBox">
-          <input name="u_id" class="input" type="text" maxlength="10" value=""/>
+          <input name="u_id" class="input" type="text" maxlength="10" placeholder="아이디를 입력해주세요" value=""/>
+          <span class="hmsg" id="hid"></span>
         </div>
-        <span class="hmsg" id="hid"></span>
+        
       </td>
     </tr>
     <tr>
@@ -75,7 +76,7 @@ tbody td .hmsg {
       </td>
       <td>
         <div class="conBox">
-          <input name="u_name" class="input" type="text" maxlength="10" value=""/>
+          <input name="u_name" class="input" type="text" maxlength="10" placeholder="이름을 입력해주세요" value=""/>
         </div>
       </td>
     </tr>   
@@ -86,7 +87,7 @@ tbody td .hmsg {
       </td>
       <td>
         <div class="conBox">
-          <input name="u_mail1" class="input" type="text" maxlength="50" value=""/>
+          <input name="u_mail1" class="input" type="text" maxlength="50" placeholder="이메일을 입력해주세요" value=""/>
           @
           <input name="u_mail2" class="input" type="text" size="10" value=""/>
           <select name="u_mail3" onchange="setMail2(this.value)">
@@ -117,7 +118,7 @@ tbody td .hmsg {
       </td>
       <td>
         <div class="conBox">
-          <input name="u_nick" class="input" type="text" maxlength="20" value=""/>
+          <input name="u_nick" class="input" type="text" maxlength="20" placeholder="별명을 입력해주세요" value=""/>
         </div>
       </td>
     </tr>    
@@ -129,19 +130,64 @@ tbody td .hmsg {
 
 </form>
 <script type="text/javascript">
-
+idck = 0;
 $(document).ready(function(){
+	//아이디 중복확인
+	$('input[name=u_id]').on('change',function(){
+		var u_id = $('input[name=u_id]').val();
+		$.ajax({
+/* 			async:true, */
+			type:'POST',
+			data:u_id,
+			dataType:'json',
+			url :'idCheck.do',
+			contentType: "application/json; charset=UTF-8",
+			success:function(val){
+				if(val >0){
+					$('#hid').empty();
+					$('#hid').html('존재하는 아이디입니다.');
+					$('input[name=u_id]').val("");
+					$('input[name=u_id]').focus();
+				}else{
+					$('#hid').empty();
+					$('#hid').html('사용가능한 아이디입니다.');
+					$('#hid').css('color','green');
+					idck = 1;
+				}
+			}
+		});
+	});
+
 	
 	$('#ins_btn').on('click',function(){
 		var u_id = $('input[name=u_id]').val();
 		var u_name = $('input[name=u_name]').val();
 		var u_mail = $('input[name=u_mail1]').val()+$('input[name=u_mail2]').val();
 		var u_nick = $('input[name=u_nick]').val();
-		alert(u_id + u_name + u_mail + u_nick);
 		
-		$('#joinfrm').attr('method','post');
-		$('#joinfrm').attr('action','joinPro.do');
-	})
+		if(u_id == ""){
+			alert('아이디를 입력해 주세요');
+			$('input[name=u_id]').focus();
+			return false;
+		}else if(u_name == ""){
+			alert('이름을 입력해 주세요');
+			$('input[name=u_name]').focus();
+			return false;
+		}else if(u_mail == ""){
+			alert('이메일을 입력해 주세요');
+			$('input[name=u_mail1]').focus();
+			return false;
+		}else if(u_nick == ""){
+			alert('별명을 입력해 주세요');
+			$('input[name=u_nick]').focus();
+			return false;
+		}else{
+			$('#joinfrm').attr('method','post');
+			$('#joinfrm').attr('action','joinPro.do');
+			return true;
+		}
+		
+	});
 });
 
 var setMail2 = function(val){
@@ -155,12 +201,27 @@ var setMail2 = function(val){
 	}
 }
 
-/* var emailchk = function(){
+var emailchk = $('#mail_btn').on('click',function(){	
+	var u_mail = $('input[name=u_mail1]').val()+"-"+$('input[name=u_mail2]').val();
 	$.ajax({
-		type:"POST",
-		dataType:
-	})
-} */
+/* 		anync:true, */
+		type:'POST',
+		data:u_mail,
+		dataType:'json',
+		url :'mailCheck.do',
+		contentType: "application/json; charset=UTF-8",		
+		success:function(val){
+			if(val >0){
+				alert('존재하는 이메일 입니다.');
+				$('input[name=u_mail1]').val("");
+				$('input[name=u_mail2]').val("");
+				$('input[name=u_mail1]').focus();
+			}else{
+				alert('사용가능한 이메일 입니다.');
+			}
+		}
+	});
+});
 </script>
 </div>
 

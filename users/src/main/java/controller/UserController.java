@@ -3,6 +3,7 @@ package controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +31,7 @@ public class UserController {
 		return "ins_user";
 	}
 	
+	/**사용자 등록**/
 	@RequestMapping(value = "/joinPro.do", method=RequestMethod.POST)
 	public String joinPro(HttpServletRequest request) {
 		UserDTO dto = new UserDTO();
@@ -39,9 +41,26 @@ public class UserController {
 		dto.setU_name(request.getParameter("u_name"));
 		dto.setU_mail(u_mail);
 		dto.setU_nick(request.getParameter("u_nick"));
-		
+		System.out.println(u_mail);
 		service.insertUserProcess(dto);
 		
 		return "redirect:/insform.do";
+	}
+	
+	/**아이디 중복확인**/	
+	@RequestMapping(value = "/idCheck.do", method = RequestMethod.POST)
+	public @ResponseBody int idCheck(@RequestBody String u_id) {
+		int count = 0;
+		count = service.idCheckProcess(u_id);
+		return count;
+	}
+	
+	/**이메일 중복확인**/
+	@RequestMapping(value = "/mailCheck.do", method = RequestMethod.POST)
+	public @ResponseBody int mailCheck(@RequestBody String u_mail) {
+		int count = 0;
+		
+		count = service.mailCheckProcess(u_mail);
+		return count;
 	}
 }

@@ -10,5 +10,16 @@
 	  insert into Mems(u_id, u_name, u_mail, u_nick, u_day)
 	  values (#{u_id}, #{u_name}, #{u_mail}, #{u_nick}, sysdate)
 	</select>
-
+	
+	<!-- 아이디 중복확인 -->
+	<select id="idChk" parameterType="String" resultType="Integer">
+	  select count(*) from Mems
+	  where u_id=#{u_id}
+	</select>
+	
+	<!-- 이메일 중복확인 -->
+	<select id="mailChk" parameterType="String" resultType="Integer">
+	  select count(*) from Mems
+	  where u_mail=#{u_mail}
+	</select>	
 </mapper>

@@ -21,10 +21,22 @@ public class UserDaoImp implements UserDAO {
 
 
 
-	//사용자 등록
+	/**사용자 등록**/
 	@Override
 	public void insertUser(UserDTO dto) {
 		sqlSession.insert("user.insUser",dto);
+	}
+	
+	/**아이디 중복확인**/
+	@Override
+	public int idCheck(String u_id) {	
+		return sqlSession.selectOne("user.idChk",u_id);
+	}
+
+	/**이메일 중복확인**/
+	@Override
+	public int mailCheck(String u_mail) {
+		return sqlSession.selectOne("user.mailChk",u_mail);
 	}
 	
 }
