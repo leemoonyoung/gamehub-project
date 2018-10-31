@@ -136,7 +136,7 @@ $(document).ready(function(){
 	$('input[name=u_id]').on('change',function(){
 		var u_id = $('input[name=u_id]').val();
 		$.ajax({
-/* 			async:true, */
+			async:true, 
 			type:'POST',
 			data:u_id,
 			dataType:'json',
@@ -204,7 +204,7 @@ var setMail2 = function(val){
 var emailchk = $('#mail_btn').on('click',function(){	
 	var u_mail = $('input[name=u_mail1]').val()+"-"+$('input[name=u_mail2]').val();
 	$.ajax({
-/* 		anync:true, */
+ 		anync:true, 
 		type:'POST',
 		data:u_mail,
 		dataType:'json',
