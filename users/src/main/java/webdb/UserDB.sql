@@ -17,3 +17,9 @@ nocycle;
 select * from Mems;
 drop table Mems;	
 drop sequence Mems_seq;
+
+select b.*
+from(select rownum as rm, a.*
+	 from(select * from Mems
+	  	  order by u_day desc) a)b
+where b.rm>=1 and b.rm<=5

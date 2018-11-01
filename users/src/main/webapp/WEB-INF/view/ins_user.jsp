@@ -4,23 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script type="text/javascript" src="js/ins_user.js"></script>
 <style type="text/css">
 form #mail_btn{padding:4px 7px;margin-top:10px}
-.key {
-    font-weight: normal;
-    padding-left: 20px;
-    width: 120px;
-    color: #111;
-}
 
 .red {
     color: #ff0000 !important;
-}
-
-tbody td {
-    padding: 12px 0;
-    border-bottom: #ddd solid 1px;
-    color: #999;
 }
 
 
@@ -126,70 +116,12 @@ tbody td .hmsg {
 </table>
 <div class="btn_box">
   <input id="ins_btn" class="sbtn" type="submit" value="사용자 등록">
+  <a href="#" onclick="history.go(-1);return false;" style="text-decoration:underline;">취소</a>
 </div>
 
 </form>
 <script type="text/javascript">
-idck = 0;
-$(document).ready(function(){
-	//아이디 중복확인
-	$('input[name=u_id]').on('change',function(){
-		var u_id = $('input[name=u_id]').val();
-		$.ajax({
-			async:true, 
-			type:'POST',
-			data:u_id,
-			dataType:'json',
-			url :'idCheck.do',
-			contentType: "application/json; charset=UTF-8",
-			success:function(val){
-				if(val >0){
-					$('#hid').empty();
-					$('#hid').html('존재하는 아이디입니다.');
-					$('input[name=u_id]').val("");
-					$('input[name=u_id]').focus();
-				}else{
-					$('#hid').empty();
-					$('#hid').html('사용가능한 아이디입니다.');
-					$('#hid').css('color','green');
-					idck = 1;
-				}
-			}
-		});
-	});
-
-	
-	$('#ins_btn').on('click',function(){
-		var u_id = $('input[name=u_id]').val();
-		var u_name = $('input[name=u_name]').val();
-		var u_mail = $('input[name=u_mail1]').val()+$('input[name=u_mail2]').val();
-		var u_nick = $('input[name=u_nick]').val();
-		
-		if(u_id == ""){
-			alert('아이디를 입력해 주세요');
-			$('input[name=u_id]').focus();
-			return false;
-		}else if(u_name == ""){
-			alert('이름을 입력해 주세요');
-			$('input[name=u_name]').focus();
-			return false;
-		}else if(u_mail == ""){
-			alert('이메일을 입력해 주세요');
-			$('input[name=u_mail1]').focus();
-			return false;
-		}else if(u_nick == ""){
-			alert('별명을 입력해 주세요');
-			$('input[name=u_nick]').focus();
-			return false;
-		}else{
-			$('#joinfrm').attr('method','post');
-			$('#joinfrm').attr('action','joinPro.do');
-			return true;
-		}
-		
-	});
-});
-
+//이메일 선택
 var setMail2 = function(val){
 	if(val=='self'){
 		$('input[name=u_mail2]').attr('readonly',false);
@@ -201,6 +133,7 @@ var setMail2 = function(val){
 	}
 }
 
+//이메일 중복체크
 var emailchk = $('#mail_btn').on('click',function(){	
 	var u_mail = $('input[name=u_mail1]').val()+"-"+$('input[name=u_mail2]').val();
 	$.ajax({
