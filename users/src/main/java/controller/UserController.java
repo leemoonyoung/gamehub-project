@@ -44,7 +44,7 @@ public class UserController {
 				currentPage = pv.getCurrentPage(); //page클릭 후 넘겨준 값
 			}
 		}
-		pdto = new PageDTO(currentPage, totalRecord);
+		pdto = new PageDTO(currentPage, totalRecord);		
 		mav.addObject("uList", service.listProcess(pdto));
 		mav.addObject("pv",pdto);
 		mav.setViewName("list_user");

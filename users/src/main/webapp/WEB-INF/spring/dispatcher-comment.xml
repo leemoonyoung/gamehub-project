@@ -43,6 +43,18 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
+	<!-- [5] 선언적 트랜잭션(tx:advice) 선언 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	  <tx:attributes>
+	    <tx:method name="*Process" rollback-for="java.lang.Exception"/>
+	  </tx:attributes>
+	</tx:advice>
+	
+	<!-- 트랜잭션 설정 -->
+	<aop:config>
+	  <aop:advisor advice-ref="txAdvice" pointcut="execution(* service.User*.*(..))"/>
+	</aop:config>
+	
 	<!-- DAO -->
 	<bean id="user_dao" class="dao.UserDaoImp">
 		<property name="sqlSession" ref="sqlSession"/>

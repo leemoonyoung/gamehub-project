@@ -13,7 +13,6 @@ form #mail_btn{padding:4px 7px;margin-top:10px}
     color: #ff0000 !important;
 }
 
-
 #mail_btn {
     border: 1px solid #dddddd;
     padding: 10px;
@@ -136,6 +135,10 @@ var setMail2 = function(val){
 //이메일 중복체크
 var emailchk = $('#mail_btn').on('click',function(){	
 	var u_mail = $('input[name=u_mail1]').val()+"-"+$('input[name=u_mail2]').val();
+	if($('input[name=u_mail1]').val() == ""){
+		alert("이메일을 입력해주세요.");
+		$('input[name=u_mail1]').focus
+	}else{
 	$.ajax({
  		anync:true, 
 		type:'POST',
@@ -154,6 +157,7 @@ var emailchk = $('#mail_btn').on('click',function(){
 			}
 		}
 	});
+	}
 });
 </script>
 </div>
