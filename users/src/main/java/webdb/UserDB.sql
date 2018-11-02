@@ -5,10 +5,10 @@ CREATE TABLE Mems(
 	u_name varchar2(30) NOT NULL,
 	u_mail varchar2(70) NOT NULL UNIQUE,
 	u_nick varchar2(60),
-	u_day date
+	u_day date NOT NULL
 	);
 
-*사용자 속성에서 이메일 max 50이지만 뒤에 메일 주소 추가하여
+*사용자 속성에서 이메일 max 50이지만 뒤에 메일 주소 길이로 인한 추가하여
 70으로 지정
 	
 *오라클에서 index가 필요할때 (시퀀스 같이 생성)	
